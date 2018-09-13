@@ -23,3 +23,8 @@ class Local(Common):
     EMAIL_HOST = 'localhost'
     EMAIL_PORT = 1025
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    SECRET_KEY = '123qwe'
+    CREATE_SUPERUSER = True
+    SUPERUSER_USERNAME = 'admin'
+    SUPERUSER_EMAIL = 'admin@edxgator.com'
+    SUPERUSER_PASSWORD = '123qwe'

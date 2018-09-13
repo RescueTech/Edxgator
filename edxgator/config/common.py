@@ -3,11 +3,11 @@ from os.path import join
 from distutils.util import strtobool
 import dj_database_url
 from configurations import Configuration
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 class Common(Configuration):
 
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     INSTALLED_APPS = (
         'django.contrib.admin',
         'django.contrib.auth',
@@ -23,7 +23,8 @@ class Common(Configuration):
         'django_filters',            # for filtering rest endpoints
 
         # Your apps
-        'edxgator.users',
+        'edxgator.users.apps.UsersConfig',
+        'edxgator.courses',
 
     )
 
@@ -53,7 +54,8 @@ class Common(Configuration):
     # Postgres
     DATABASES = {
         'default': dj_database_url.config(
-            default='postgres://postgres:@postgres:5432/postgres',
+            # default='postgres://postgres:@postgres:5432/postgres',  # For docker
+            default='postgres://dexter:123qwe@localhost:5432/edxgator',  # For bare-metal
             conn_max_age=int(os.getenv('POSTGRES_CONN_MAX_AGE', 600))
         )
     }

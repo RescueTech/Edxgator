@@ -23,6 +23,7 @@ def create_superuser(sender, **kwargs):
     """
     if getattr(settings, 'CREATE_SUPERUSER', False):
 
+        username = settings.SUPERUSER_USERNAME
         email = settings.SUPERUSER_EMAIL
         password = settings.SUPERUSER_PASSWORD
 
@@ -30,4 +31,4 @@ def create_superuser(sender, **kwargs):
             User.objects.get(email=email)
         except User.DoesNotExist:
             print('Creating superuser ({0}:{1})'.format(email, password))
-            User.objects.create_superuser(email=email, password=password)
+            User.objects.create_superuser(username=username, email=email, password=password)

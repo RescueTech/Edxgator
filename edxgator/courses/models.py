@@ -3,19 +3,19 @@ from django.contrib.postgres.fields import ArrayField
 
 
 class Course(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=200)
     start = models.DateTimeField(null=True, blank=True)
     end = models.DateTimeField(null=True, blank=True)
-    number = models.CharField(max_length=15, default='', blank=True)
+    number = models.CharField(max_length=25, default='', blank=True)
     min_effort = models.PositiveSmallIntegerField(null=True, blank=True)
-    mobile_available = models.BooleanField(null=True, blank=True)
-    organization = models.CharField(max_length=15, default='', blank=True)
-    first_enrollable_paid_seat_sku = models.CharField(max_length=20, default='', blank=True)
+    mobile_available = models.NullBooleanField(blank=True)
+    organization = models.CharField(max_length=35, default='', blank=True)
+    first_enrollable_paid_seat_sku = models.CharField(max_length=20, null=True, blank=True)
     image_url = models.URLField(null=True, blank=True)
     enrollment_end = models.DateTimeField(null=True, blank=True)
     marketing_url = models.URLField(null=True, blank=True)
     type = models.CharField(max_length=20, default='', blank=True)
-    has_enrollable_seats = models.BooleanField(null=True, blank=True)
+    has_enrollable_seats = models.NullBooleanField(blank=True)
     full_description = models.TextField(null=True, blank=True)
     program_types = ArrayField(
         models.CharField(max_length=100),
@@ -33,7 +33,7 @@ class Course(models.Model):
         default=list, blank=True
     )
     pacing_type = models.CharField(max_length=20, default='', blank=True)
-    published = models.BooleanField(null=True, blank=True)
+    published = models.NullBooleanField(blank=True)
     aggregation_key = models.CharField(max_length=100, default='', blank=True)
     authoring_organization_uuids = ArrayField(
         models.UUIDField(),
@@ -46,7 +46,7 @@ class Course(models.Model):
         default=list, blank=True
     )
     first_enrollable_paid_seat_price = models.PositiveSmallIntegerField(null=True, blank=True)
-    key = models.CharField(max_length=60, null=True, blank=True)
+    key = models.CharField(max_length=60, null=True, blank=True, unique=True)
     logo_image_urls = ArrayField(
         models.URLField(),
         default=list, blank=True
