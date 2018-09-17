@@ -9,3 +9,4 @@ class CourseViewSet(ListModelMixin, GenericViewSet):
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
     pagination_class = None
+    filter_fields = ('organization', 'type', 'published', 'language', 'availability')
