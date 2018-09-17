@@ -7,7 +7,6 @@ from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 
 from .courses.views import CourseViewSet
-
 from .users.views import UserViewSet, UserCreateViewSet
 
 
