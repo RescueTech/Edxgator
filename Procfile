@@ -1,2 +1,3 @@
 release: python manage.py migrate
-web: newrelic-admin run-program gunicorn config.wsgi:application
+web: gunicorn edxgator.wsgi:application
+
