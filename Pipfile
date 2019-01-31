@@ -31,6 +31,8 @@ celery = "*"
 requests = "*"
 simplejson = "*"
 django-rest-swagger = "*"
+pytest = "*"
+motor = "*"
 
 [dev-packages]
 
