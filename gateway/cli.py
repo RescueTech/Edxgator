@@ -1,5 +1,9 @@
 import argparse
 
+from datetime import datetime
+
+from .course_puller import pull_courses
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Gateway to Edxgator - syncing cleaned courses")
@@ -12,9 +16,11 @@ def parse_args():
 
 
 def sync_edx(*args, **kwargs):
-    print(args)
-    print(kwargs)
-    print("We're syncing edx right now...")
+    start_time = datetime.now()
+    print("Starting sync operation at {}".format(start_time))
+    pull_courses()
+    end_time = datetime.now()
+    print("Sync operation completed at {} with total time: {}".format(end_time, end_time - start_time))
 
 
 def main():
