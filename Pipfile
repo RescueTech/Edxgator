@@ -33,6 +33,10 @@ simplejson = "*"
 django-rest-swagger = "*"
 pytest = "*"
 motor = "*"
+starlette = "*"
+uvicorn = "*"
+jinja2 = "*"
+aiofiles = "*"
 
 [dev-packages]
 
