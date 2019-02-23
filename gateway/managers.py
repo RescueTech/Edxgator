@@ -1,12 +1,21 @@
 """
 Stores, retrieves, and inspects courses only in the case of syncing from outside sources
 """
-from datetime import datetime
+import pymongo
 from pymongo import MongoClient
 
 
 class CourseSyncManager:
-
+    FIELDS = {
+        "image_url": 1,
+        "title": 1,
+        "org": 1,
+        "availability": 1,
+        "start": 1,
+        "end": 1,
+        "marketing_url": 1,
+        "weeks_to_complete": 1,
+    }
     def __init__(self):
         self.connection = MongoClient()
         self.db = self.connection.edxgator
@@ -38,8 +47,29 @@ class CourseSyncManager:
         if self.courses_could_not_be_validated:
             self._handle_course_anomalies()
 
+    def all_courses(self):
+        return self.course_collection.find()
+
+    def our_suggested_courses(self):
+        return self.course_collection.find(
+            {
+                "language": "English",
+                "authoring_organizations.name": {"$ne": "Microsoft"}, "org": {"$ne" : "Microsoft"},
+                "availability": {"$in": ["Upcoming", "Starting Soon", "Current"]},
+                "content_type": "courserun",  # For now don't show Edx programs
+                "weeks_to_complete": {"$gte": 8}
+            },
+            self.FIELDS
+        ).sort("weeks_to_complete", pymongo.DESCENDING)
+
+    def get_course(self, **query):
+        return self.course_collection.find_one(query)
+
     def sync(self, courses):
         if type(courses) is not list:
             courses = [courses]
         self.new_courses += len(courses)
         self._create_or_update_courses(courses)
+
+
+course_manager = CourseSyncManager()
