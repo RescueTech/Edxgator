@@ -57,7 +57,8 @@ class CourseSyncManager:
                 "authoring_organizations.name": {"$ne": "Microsoft"}, "org": {"$ne" : "Microsoft"},
                 "availability": {"$in": ["Upcoming", "Starting Soon", "Current"]},
                 "content_type": "courserun",  # For now don't show Edx programs
-                "weeks_to_complete": {"$gte": 8}
+                "weeks_to_complete": {"$gte": 8},
+                "title": {"$regex": "^((?!AP).)*$"},
             },
             self.FIELDS
         ).sort("weeks_to_complete", pymongo.DESCENDING)
