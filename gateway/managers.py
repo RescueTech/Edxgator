@@ -15,6 +15,7 @@ class CourseSyncManager:
         "end": 1,
         "marketing_url": 1,
         "weeks_to_complete": 1,
+        "pacing_type": 1,
     }
     def __init__(self):
         self.connection = MongoClient()
