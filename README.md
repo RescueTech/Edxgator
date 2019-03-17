@@ -20,5 +20,5 @@ There's currently, the third submodule called `ui`, but it's to be removed soon.
 ---
 Important commands:
 
-- server: `python -u api runserver`
-- sync edx: `python -u sync_edx`
+- server: `python -m api runserver`
+- sync edx: `python -m sync_edx`
