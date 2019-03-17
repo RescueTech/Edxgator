@@ -1,75 +1,24 @@
 # edxgator
 
-[![Build Status](https://travis-ci.org/zee93/edxgator.svg?branch=master)](https://travis-ci.org/zee93/edxgator)
-[![Built with](https://img.shields.io/badge/Built_with-Cookiecutter_Django_Rest-F7B633.svg)](https://github.com/agconti/cookiecutter-django-rest)
-
 Edx course aggregator - Advanced edx filtration system. Check out the project's [documentation](http://zee93.github.io/edxgator/).
 
-# Prerequisites
+This project is built using the following tech:
 
-- [Docker](https://docs.docker.com/docker-for-mac/install/)  
-- [Travis CLI](http://blog.travis-ci.com/2013-01-14-new-client/)
-- [Heroku Toolbelt](https://toolbelt.heroku.com/)
+- MongoDB
+- starlette
+- uvicorn
 
-# Local Development
 
-Start the dev server for local development:
-```bash
-docker-compose up
-```
+This architecture of the project:
 
-Run a command inside the docker container:
+we have two main modules, the API, and the gateway. The API si the interface to the frontend and is responsible for the 
+interactions with it. It's also responsible for interacting with the gateway which takes the raw data from the API,
+and processes it before sending it to the mongo database.
 
-```bash
-docker-compose run --rm web [command]
-```
+There's currently, the third submodule called `ui`, but it's to be removed soon.
 
-# Continuous Deployment
+---
+Important commands:
 
-Deployment is automated via Travis. When builds pass on the master or qa branch, Travis will deploy that branch to Heroku. Follow these steps to enable this feature.
-
-Initialize the production server:
-
-```
-heroku create edxgator-prod --remote prod && \
-    heroku addons:create newrelic:wayne --app edxgator-prod && \
-    heroku addons:create heroku-postgresql:hobby-dev --app edxgator-prod && \
-    heroku config:set DJANGO_SECRET_KEY=`openssl rand -base64 32` \
-        DJANGO_AWS_ACCESS_KEY_ID="Add your id" \
-        DJANGO_AWS_SECRET_ACCESS_KEY="Add your key" \
-        DJANGO_AWS_STORAGE_BUCKET_NAME="edxgator-prod" \
-        DJANGO_CONFIGURATION="Production" \
-        DJANGO_SETTINGS_MODULE="edxgator.config" \
-        --app edxgator-prod
-```
-
-Initialize the qa server:
-
-```
-heroku create edxgator-qa --remote qa && \
-    heroku addons:create newrelic:wayne --app edxgator-qa && \
-    heroku addons:create heroku-postgresql:hobby-dev --app edxgator-qa && \
-    heroku config:set DJANGO_SECRET_KEY=`openssl rand -base64 32` \
-        DJANGO_AWS_ACCESS_KEY_ID="Add your id" \
-        DJANGO_AWS_SECRET_ACCESS_KEY="Add your key" \
-        DJANGO_AWS_STORAGE_BUCKET_NAME="edxgator-qa" \
-        DJANGO_CONFIGURATION="Production" \
-        DJANGO_SETTINGS_MODULE="edxgator.config" \
-        --app edxgator-qa
-```
-
-Securely add your Heroku credentials to Travis so that it can automatically deploy your changes:
-
-```bash
-travis encrypt HEROKU_AUTH_TOKEN="$(heroku auth:token)" --add
-```
-
-Commit your changes and push to master and qa to trigger your first deploys:
-
-```bash
-git commit -a -m "ci(travis): add Heroku credentials" && \
-git push origin master:qa && \
-git push origin master
-```
-
-You're now ready to continuously ship! ✨ 💅 🛳
+- server: `python -u api runserver`
+- sync edx: `python -u sync_edx`
