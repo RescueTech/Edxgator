@@ -1,6 +1,8 @@
 """
 Stores, retrieves, and inspects courses only in the case of syncing from outside sources
 """
+import os
+
 import pymongo
 from pymongo import MongoClient
 
@@ -18,7 +20,7 @@ class CourseSyncManager:
         "pacing_type": 1,
     }
     def __init__(self):
-        self.connection = MongoClient()
+        self.connection = MongoClient(os.getenv("MONGODB_URI"))
         self.db = self.connection.edxgator
         self.course_collection = self.db["Course"]
         self.courses_could_not_be_validated = []
