@@ -21,7 +21,11 @@ class CourseSyncManager:
     }
     def __init__(self):
         self.connection = MongoClient(os.getenv("MONGODB_URI"))
-        self.db = self.connection.edxgator
+        if os.getenv("MONGODB_URI"):
+            # This covers the case where DB name is provided in the URI
+            self.db = self.connection.get_database()
+        else:
+            self.db = self.connection.edxgator
         self.course_collection = self.db["Course"]
         self.courses_could_not_be_validated = []
         self.updated_courses = 0
