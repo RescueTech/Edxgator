@@ -12,6 +12,7 @@ bson = "*"
 pymongo = "*"
 requests = "*"
 gunicorn = "*"
+graphene = "*"
 
 [requires]
 python_version = "3.7"
