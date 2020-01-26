@@ -20,7 +20,7 @@ class CourseSyncManager:
         "pacing_type": 1,
     }
     def __init__(self):
-        self.connection = MongoClient(os.getenv("MONGODB_URI"))
+        self.connection = MongoClient(os.getenv("MONGODB_URI"), retryWrites=False)
         if os.getenv("MONGODB_URI"):
             # This covers the case where DB name is provided in the URI
             self.db = self.connection.get_database()
