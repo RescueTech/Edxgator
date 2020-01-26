@@ -5,7 +5,7 @@ from .app import app
 
 
 def run_server(*args, **kwargs):
-    uvicorn.run(app, host='localhost', port=8000)
+    uvicorn.run(app, host='localhost', reload=True, port=8000)
 
 
 def parse_args():

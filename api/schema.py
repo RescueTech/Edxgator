@@ -7,8 +7,13 @@ class CourseType(graphene.ObjectType):
     title = graphene.String()
     start = graphene.String()
     end = graphene.String()
-    pacing_type = graphene.String()
     _id = graphene.ID()
+    marketing_url = graphene.String()
+    card_image_url = graphene.String()
+    org = graphene.String()
+    availability = graphene.String()
+    pacing_type = graphene.String()
+    weeks_to_complete = graphene.String()
     image_url = graphene.String()
 
 
